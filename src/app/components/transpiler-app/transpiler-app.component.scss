@@ -1,0 +1,9 @@
+:host {
+  .app-container {
+    display: flex;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}

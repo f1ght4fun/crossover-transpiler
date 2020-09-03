@@ -1,0 +1,57 @@
+:host {
+  .criteria {
+    background-color: #9b9b9b;
+    overflow: hidden;
+    height: 50px;
+    box-sizing: border-box;
+
+    .selection {
+      padding-top: 20px;
+    }
+
+    ::ng-deep {
+      .mat-select-disabled {
+        .mat-select-value {
+          color: rgba(black, 0.2);
+        }
+
+        .mat-select-arrow {
+          color: rgba(black, 0.2);
+        }
+      }
+
+      mat-label {
+        color: black;
+
+        &.disabled {
+          color: rgba(black, 0.2);
+        }
+      }
+
+      .mat-select-value {
+        color: black;
+      }
+
+      .mat-select-arrow {
+        color: black;
+      }
+    }
+  }
+}
+
+::ng-deep {
+  .cdk-overlay-container {
+    .mat-select-panel {
+      &.select-panel {
+        margin-top: 15%;
+
+        background-color: white;
+        color: black;
+
+        .mat-option {
+          color: black;
+        }
+      }
+    }
+  }
+}

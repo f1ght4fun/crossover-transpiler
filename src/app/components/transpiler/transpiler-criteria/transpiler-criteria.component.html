@@ -1,0 +1,50 @@
+<div class="fx-layout-row fx-align-items-center fx-justify-content-space-between criteria px-2">
+  <div class="fx-layout-row fx-align-items-center selection">
+    <mat-form-field appearance="fill" class="pr-2">
+      <mat-label class="fx-layout-row fx-justify-content-start fx-align-items-center">
+        <mat-icon>people_outline</mat-icon>
+        <span class="pl-1">Agent</span>
+      </mat-label>
+      <mat-select [panelClass]="'select-panel'" [(value)]="AgentID">
+        <mat-option *ngFor="let agent of dataSrv.Agents" [value]="agent?.agent_id">
+          {{ agent?.full_name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="pr-2">
+      <mat-label class="fx-layout-row fx-justify-content-start fx-align-items-center">
+        <mat-icon>reorder</mat-icon>
+        <span class="pl-1">Type</span>
+      </mat-label>
+      <mat-select [panelClass]="'select-panel'" [(value)]="criteriaModel.calltype_id">
+        <mat-option value="all">All</mat-option>
+        <mat-option *ngFor="let ct of dataSrv.CallTypes" [value]="ct?.calltype_id">
+          {{ ct?.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <ng-container *ngIf="dataSrv.Calls | callFilter: criteriaModel?.agent_id : criteriaModel?.calltype_id as filteredCalls">
+      <mat-form-field appearance="fill">
+        <mat-label
+          class="fx-layout-row fx-justify-content-start fx-align-items-center"
+          [class.disabled]="!criteriaModel?.agent_id || filteredCalls.length === 0"
+        >
+          <mat-icon>phone</mat-icon>
+          <span class="pl-1">Call</span>
+        </mat-label>
+        <mat-select [panelClass]="'select-panel'" [disabled]="!criteriaModel?.agent_id || filteredCalls.length === 0" [(value)]="Call">
+          <mat-option *ngFor="let c of filteredCalls" [value]="c.call_id">
+            {{ c.call_start_time | date: 'dd.M.yyyy' }} - {{ c.customer[0]?.full_name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ng-container>
+  </div>
+  <div class="fx-layout-row fx-align-items-center">
+    <div class="pr-2"><strong>Matching Sensitivity</strong></div>
+    <mat-slider [max]="100" [min]="0" [step]="1" [style.min-width.px]="400" [(value)]="Sensitivity"></mat-slider>
+    <div class="pl-2"><strong>{{ criteriaModel?.sensitivity + '%'}}</strong></div>
+  </div>
+</div>

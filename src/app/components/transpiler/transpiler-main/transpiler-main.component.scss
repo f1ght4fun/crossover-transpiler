@@ -1,0 +1,62 @@
+:host {
+  .content {
+    overflow: auto;
+  }
+
+  mat-card {
+    background-color: white;
+    color: black;
+    padding: 0;
+
+    mat-card-header {
+      background-color: rgba(grey, 0.7);
+      font-weight: 700;
+    }
+  }
+
+  table {
+    background-color: white;
+    color: black;
+
+    tr.mat-row,
+    tr.mat-footer-row {
+      height: inherit;
+    }
+
+    th {
+      color: black;
+      font-weight: 600;
+      border-bottom: 1px black solid;
+    }
+
+    td {
+      color: black;
+    }
+  }
+
+  :ng-deep {
+    .mat-table {
+      background-color: white;
+      color: black;
+
+      .mat-header-cell {
+        color: rgba(grey, 0.7);
+      }
+
+      .mat-cell {
+        color: black;
+      }
+    }
+  }
+
+  .pending-pic {
+    height: 500px;
+    width: 800px;
+    background-image: url('../../../../assets/pending.png');
+    background-size: cover;
+  }
+
+  .sensitivity {
+    background-color: rgba(grey, 0.5);
+  }
+}

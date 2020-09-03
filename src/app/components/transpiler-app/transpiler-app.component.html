@@ -1,0 +1,9 @@
+<div class="app-container fx-fill fx-layout-column">
+  <app-transpiler-header fxFlex="0 0 40px"></app-transpiler-header>
+  <div fxFlex="0 0 50px">
+    <app-transpiler-criteria (criteriaChanged)="criteriaChangedHandler($event)"></app-transpiler-criteria>
+  </div>
+  <div fxFill>
+    <app-transpiler-main [Transcript]="transcript" [sensitivity]="sensitivity"></app-transpiler-main>
+  </div>
+</div>

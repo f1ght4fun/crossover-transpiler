@@ -1,0 +1,13 @@
+:host {
+  ::ng-deep {
+    mat-card {
+      display: flex;
+      background-color: var(--header-background-color);
+
+      .avatar {
+        background-image: url('https://www.nj.com/resizer/zovGSasCaR41h_yUGYHXbVTQW2A=/1280x0/smart/cloudfront-us-east-1.images.arcpublishing.com/advancelocal/SJGKVE5UNVESVCW7BBOHKQCZVE.jpg');
+        background-size: cover;
+      }
+    }
+  }
+}

@@ -1,0 +1,38 @@
+@import '~css-vars/css-vars.scss';
+$css-vars-map-prefixed: ();
+
+// #region General
+$primary-color: #c5e1ff;
+$accent-color: #6cfff8;
+$warn-color: #ff4d6a;
+$disabled-color: #c5e1ff;
+$disabled-background-color: #2d3a48;
+$disabled-opacity: 0.3;
+$base-size: 1rem;
+$base-font-size: 14px;
+$base-font-family: unquote("'Titillium Web' , sans-serif");
+$base-line-height: 1.5;
+$base-font-weight: normal;
+$base-background-color: #5a5a71;
+$base-color: #c5e1ff;
+
+// #endregion
+
+// #region Merge Vars
+@import './project.scss';
+
+$all-vars-map: ();
+$all-vars-map: map-merge($all-vars-map, $project-var-map);
+
+@each $key, $value in $all-vars-map {
+  $css-vars-map-prefixed: map-merge($css-vars-map-prefixed, (--#{$key}: $value));
+}
+
+// Generate in one go
+// #region CSS Vars Export
+$css-vars-use-native: true;
+
+/* #region Vars */
+@include css-vars($css-vars-map-prefixed);
+/* #endregion */
+// #endregion

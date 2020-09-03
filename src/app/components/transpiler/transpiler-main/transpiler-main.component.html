@@ -1,0 +1,112 @@
+<ng-container *ngIf="!!transcript; then realTemplate; else pendingTemplate"></ng-container>
+
+<ng-template #pendingTemplate>
+  <div class="fx-fill fx-layout-column fx-justify-content-center fx-align-items-center">
+    <div class="pending-pic"></div>
+    <p><strong [style.font-size.px]="22">Selection Pending</strong></p>
+    <div>Select a call from top menu and a transcript analysis will be shown here</div>
+  </div>
+</ng-template>
+
+<ng-template #realTemplate>
+  <div class="fx-fill fx-layout-row fx-justify-content-space-around px-4 py-4">
+    <mat-card class="fx-col-5 fx-layout-column">
+      <mat-card-header class="fx-layout-row fx-justify-content-space-between py-2">
+        <div>Real</div>
+        <div class="fx-layout-row pr-2">
+          <canvas
+            height="25"
+            width="25"
+            baseChart
+            chartType="pie"
+            [colors]="pieChartColors"
+            [data]="realPieChartData"
+            [options]="pieChartOptions"
+            [legend]="false"
+          >
+          </canvas>
+          <div class="pl-1" *ngIf="this.transcript?.matching_percentage">{{ this.transcript?.matching_percentage?.toFixed(2) }}%</div>
+        </div>
+      </mat-card-header>
+      <mat-card-content fxFlex class="content">
+        <table fxFlex mat-table [dataSource]="!!transcript.realTalk ? transcript.realTalk : []">
+          <ng-container matColumnDef="time">
+            <th fxFlex="0 0 75px" fxLayoutAlign="start center" mat-header-cell *matHeaderCellDef [innerText]="'Time'"></th>
+            <td fxFlex="0 0 75px" fxLayoutAlign="start center" mat-cell *matCellDef="let item" [innerText]="item?.time"></td>
+          </ng-container>
+          <ng-container matColumnDef="speaker">
+            <th fxFlex fxLayoutAlign="start center" mat-header-cell *matHeaderCellDef [innerText]="'Speaker'"></th>
+            <td fxFlex fxLayoutAlign="start center" mat-cell *matCellDef="let item" [innerText]="item?.speaker"></td>
+          </ng-container>
+          <ng-container matColumnDef="sentence">
+            <th fxFlex fxLayoutAlign="start center" mat-header-cell *matHeaderCellDef [innerText]="'Sentence'"></th>
+            <td fxFlex fxLayoutAlign="start center" mat-cell *matCellDef="let item" [innerText]="item?.sentence"></td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumns"
+            class="py-4"
+            [class.sensitivity]="row.similarity > sensitivity"
+            [matTooltip]="getTooltipText(row)"
+            [matTooltipPosition]="'above'"
+            [matTooltipDisabled]="row.matching_order < 0"
+          >
+            {{ row | json }}
+          </tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="fx-col-5 fx-layout-column">
+      <mat-card-header class="fx-layout-row fx-justify-content-space-between py-2">
+        <div>Expected</div>
+        <div class="fx-layout-row pr-2">
+          <canvas
+            height="25"
+            width="25"
+            baseChart
+            chartType="pie"
+            [colors]="pieChartColors"
+            [data]="expectedPieChartData"
+            [options]="pieChartOptions"
+            [legend]="false"
+          >
+          </canvas>
+          <div class="pl-1">100%</div>
+        </div>
+      </mat-card-header>
+      <mat-card-content fxFlex class="content">
+        <table fxFlex mat-table [dataSource]="!!transcript.expectedTalk ? transcript.expectedTalk : []">
+          <ng-container matColumnDef="order">
+            <th
+              class="order-col"
+              fxFlex="0 0 75px"
+              fxLayoutAlign="start center"
+              mat-header-cell
+              *matHeaderCellDef
+              [innerText]="'Order'"
+            ></th>
+            <td
+              class="order-col"
+              fxFlex="0 0 75px"
+              fxLayoutAlign="start center"
+              mat-cell
+              *matCellDef="let item"
+              [innerText]="item?.order"
+            ></td>
+          </ng-container>
+          <ng-container matColumnDef="speaker">
+            <th fxFlex fxLayoutAlign="start center" mat-header-cell *matHeaderCellDef [innerText]="'Speaker'"></th>
+            <td fxFlex fxLayoutAlign="start center" mat-cell *matCellDef="let item" [innerText]="item?.speaker"></td>
+          </ng-container>
+          <ng-container matColumnDef="sentence">
+            <th fxFlex fxLayoutAlign="start center" mat-header-cell *matHeaderCellDef [innerText]="'Sentence'"></th>
+            <td fxFlex fxLayoutAlign="start center" mat-cell *matCellDef="let item" [innerText]="item?.sentence"></td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="repDisplayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: repDisplayedColumns" class="my-4"></tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</ng-template>
