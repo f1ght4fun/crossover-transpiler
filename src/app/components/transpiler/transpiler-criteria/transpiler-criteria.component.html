@@ -25,7 +25,7 @@
       </mat-select>
     </mat-form-field>
 
-    <ng-container *ngIf="dataSrv.Calls | callFilter: criteriaModel?.agent_id : criteriaModel?.calltype_id as filteredCalls">
+    <ng-container *ngIf="dataSrv.Calls | callFilterPipe: criteriaModel?.agent_id : criteriaModel?.calltype_id as filteredCalls">
       <mat-form-field appearance="fill">
         <mat-label
           class="fx-layout-row fx-justify-content-start fx-align-items-center"

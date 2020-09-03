@@ -1,8 +1,8 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Call } from '../interfaces/call.interface';
+import { Call } from '../../interfaces/call.interface';
 
 @Pipe({
-  name: 'callFilter'
+  name: 'callFilterPipe'
 })
 export class CallFilterPipe implements PipeTransform {
   transform(calls: Call[], selectedAgent: string, selectedType: string): Call[] {

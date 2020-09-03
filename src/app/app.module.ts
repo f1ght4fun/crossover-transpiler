@@ -14,8 +14,11 @@ import { AppComponent } from './components/transpiler-app/transpiler-app.compone
 import { TranspilerHeaderComponent } from './components/transpiler-header/transpiler-header.component';
 import { TranspilerCriteriaComponent } from './components/transpiler/transpiler-criteria/transpiler-criteria.component';
 import { TranspilerMainComponent } from './components/transpiler/transpiler-main/transpiler-main.component';
-import { CallFilterPipe } from './pipes/call.pipe';
+import { CallFilterPipe } from './pipes/filter-pipes/call.pipe';
+import { DictTransformPipe } from './pipes/transform-pipes/dictionary.pipe';
+import { FTransformPipe } from './pipes/transform-pipes/ftransform.pipe';
 import { DataService } from './services/data.service';
+import { TransformService } from './services/transform.service';
 
 @NgModule({
   declarations: [AppComponent, TranspilerHeaderComponent, TranspilerCriteriaComponent, TranspilerMainComponent, CallFilterPipe],
@@ -33,6 +36,6 @@ import { DataService } from './services/data.service';
     NgxWebstorageModule.forRoot()
   ],
   bootstrap: [AppComponent],
-  providers: [{ provide: Window, useValue: window }, DataService]
+  providers: [{ provide: Window, useValue: window }, DataService, TransformService, DictTransformPipe, FTransformPipe]
 })
 export class AppModule {}
