@@ -22,7 +22,17 @@ export class TranspilerCriteriaComponent {
   }
 
   set AgentID(value: string) {
-    this.criteriaModel = { agent_id: value, calltype_id: 'all', sensitivity: 38 };
+    this.criteriaModel = { agent_id: value, calltype_id: 'all', call_id: undefined, sensitivity: 38 };
+    this.criteriaChanged.emit({ call_id: undefined, sensitivity: this.criteriaModel.sensitivity });
+  }
+
+  get CallType(): string {
+    return this.criteriaModel.calltype_id;
+  }
+
+  set CallType(value: string) {
+    this.criteriaModel = { agent_id: this.criteriaModel.agent_id, calltype_id: value, call_id: undefined, sensitivity: 38 };
+    this.criteriaChanged.emit({ call_id: undefined, sensitivity: this.criteriaModel.sensitivity });
   }
 
   get Call(): string {

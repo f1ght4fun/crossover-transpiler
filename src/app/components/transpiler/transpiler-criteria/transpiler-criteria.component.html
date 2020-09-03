@@ -17,7 +17,7 @@
         <mat-icon>reorder</mat-icon>
         <span class="pl-1">Type</span>
       </mat-label>
-      <mat-select [panelClass]="'select-panel'" [(value)]="criteriaModel.calltype_id">
+      <mat-select [panelClass]="'select-panel'" [(value)]="CallType">
         <mat-option value="all">All</mat-option>
         <mat-option *ngFor="let ct of dataSrv.CallTypes" [value]="ct?.calltype_id">
           {{ ct?.name }}

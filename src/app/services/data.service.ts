@@ -35,7 +35,11 @@ export class DataService {
     this.transcripts = [transcripts];
   }
 
-  getTranscriptByCallById = (id: string): TransformedTranscript => this.transform(first(this.transcripts.filter(c => c.call_id === id)));
+  getTranscriptByCallById = (id: string): TransformedTranscript => {
+    const transcript = first(this.transcripts.filter(c => c.call_id === id));
+
+    return !!transcript ? this.transform(transcript) : undefined;
+  }
 
   private transform = (obj: Transcript): TransformedTranscript => {
     const transformObj: TransformedTranscript = {
