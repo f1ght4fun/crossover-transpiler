@@ -1,38 +1,27 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { sumBy } from 'lodash-es';
 import { Agent } from '../interfaces/agent.interface';
 import { Call } from '../interfaces/call.interface';
 import { CallType } from '../interfaces/callType.interface';
 import { Transcript, TransformedTranscript } from '../interfaces/transcript.interface';
-import agents from '../mocks/agents.json';
-import calls from '../mocks/calls.json';
-import calltypes from '../mocks/calltype.json';
-import transcripts from '../mocks/transscripts.json';
+import { DataDefinitionType, DATA_DEFINITION } from '../providers/data.provider';
 import { TransformService } from './transform.service';
 
 @Injectable()
 export class DataService {
-  private readonly agents: Agent[] = [];
-  private readonly callTypes: CallType[] = [];
-  private readonly calls: Call[] = [];
-
   get Agents(): Agent[] {
-    return this.agents;
+    return this.data.agents;
   }
 
   get CallTypes(): CallType[] {
-    return this.callTypes;
+    return this.data.calltypes;
   }
 
   get Calls(): Call[] {
-    return this.calls;
+    return this.data.calls;
   }
 
-  constructor(private transformService: TransformService) {
-    this.agents = agents;
-    this.callTypes = calltypes;
-    this.calls = calls;
-  }
+  constructor(@Inject(DATA_DEFINITION.TOKEN) private data: DataDefinitionType, private transformService: TransformService) {}
 
   getTranscriptByCallById = (id: string): TransformedTranscript => {
     const transform = (obj: Transcript): TransformedTranscript => {
@@ -53,7 +42,7 @@ export class DataService {
         if (ch === obj.customer[0].channel_no) {
           recordingParticipants[ch] = obj.customer[0].full_name;
         } else if (ch === obj.agent[0].channel_no) {
-          recordingParticipants[ch] = agents.filter(i => i.agent_id === obj.agent[0].agent_id).map(i => i.full_name)?.[0];
+          recordingParticipants[ch] = this.data.agents.filter(i => i.agent_id === obj.agent[0].agent_id).map(i => i.full_name)?.[0];
         } else {
           recordingParticipants[ch] = '';
         }
@@ -77,7 +66,7 @@ export class DataService {
     };
 
     const transformedTranscripts = this.transformService.transform<Transcript, TransformedTranscript>(
-      [transcripts].filter(c => c.call_id === id),
+      [this.data.transcripts].filter(c => c.call_id === id),
       transform
     );
 

@@ -17,6 +17,7 @@ import { TranspilerMainComponent } from './components/transpiler/transpiler-main
 import { CallFilterPipe } from './pipes/filter-pipes/call.pipe';
 import { DictTransformPipe } from './pipes/transform-pipes/dictionary.pipe';
 import { FTransformPipe } from './pipes/transform-pipes/ftransform.pipe';
+import { DATA_DEFINITION } from './providers/data.provider';
 import { DataService } from './services/data.service';
 import { TransformService } from './services/transform.service';
 
@@ -36,6 +37,12 @@ import { TransformService } from './services/transform.service';
     NgxWebstorageModule.forRoot()
   ],
   bootstrap: [AppComponent],
-  providers: [{ provide: Window, useValue: window }, DataService, TransformService, DictTransformPipe, FTransformPipe]
+  providers: [
+    { provide: DATA_DEFINITION.TOKEN, useValue: DATA_DEFINITION.instance },
+    DataService,
+    TransformService,
+    DictTransformPipe,
+    FTransformPipe
+  ]
 })
 export class AppModule {}
